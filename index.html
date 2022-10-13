@@ -124,7 +124,7 @@
                     Patient Gender<span style="color: red;">*</span>
                 </label>
                 <br>
-                <select name="" id="Gender">
+                <select name="" id="Gender" class="form-control">
                     <option value="">-----select------</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
@@ -134,8 +134,8 @@
             </div>
 
             <div class="form-group">
-                <label for="">Phone no.<span style="color: red;">*</span></label><br>
-                <input id="" type="number">
+                <label for="Phone">Phone no.<span style="color: red;">*</span></label><br>
+                <input id="Phone" type="number" class="form-control">
                 <span class="form-message"></span>
             </div>
 
@@ -143,13 +143,13 @@
 
             <div class="form-group">
                 <label for="">Spouce Name</label><br>
-                <input id="" type="text">
+                <input id="" type="text" class="form-control">
                 <span class="form-message"></span>
             </div>
 
             <div class="form-group">
                 <label for="">With whome do you live?</label><br>
-                <input id="" type="text">
+                <input id="" type="text" class="form-control">
                 <span class="form-message"></span>
             </div>
 
@@ -161,7 +161,7 @@
 
             <div class="form-group">
                 <label for="">Personal opinion</label><br>
-                <textarea name="Personal" id="Personal"></textarea>
+                <textarea name="Personal" id="Personal" class="form-control"></textarea>
                 <span class="form-message"></span>
             </div>
             <div class="form-group">
@@ -182,6 +182,9 @@
                 <label for="">no</label><br>
                 <span class="form-message"></span>
             </div>
+
+
+            <input type="submit" style="padding: 10px 20px;">
         </form>
 
     </div>
@@ -194,9 +197,9 @@
             rules: [
                 Validator.isRequired('#age'),
                 Validator.isRequired('#Gender'),
+                Validator.isRequired('#Phone'),
                 Validator.isRequired('#Email'),
-                Validator.isEmail('#Email'),
-                
+                Validator.isEmail('#Email'),  
             ],
             onSubmit: (data) => {
                 console.log(data)
