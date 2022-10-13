@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .container {
+        max-width: 960px;
+        margin: 40px auto;
+        box-shadow: 0 5px 10px 0 rgba(24, 25, 26, 0.1);
+        padding: 10px 20px;
+    }
+
+    .flex {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .form-group .form-control {
+        border: 1px solid gray;
+    }
+
+    .form-group.invalid .form-control {
+        border: 1px solid #f33a58;
+    }
+
+    .form-group.invalid .form-message {
+        color: #f33a58;
+    }
+
+
+    .form-control:hover {
+        border: 1px solid #1dbfaf;
+    }
+
+    .flex .form-group {
+        /* padding: 10px 20px  ; */
+        /* float: right; */
+        flex: 0 0 47%;
+
+    }
+
+    .form-group textarea {
+        width: 920px !important;
+    }
+
+    .form-group textarea,
+    .form-group select,
+    .form-group input {
+        width: 100%;
+        padding: 10px 20px;
+        /* border: none; */
+        /* background-color: #aaaaaa; */
+    }
+
+
+    .flex .form-group input {
+        width: 100%;
+        padding: 10px 20px;
+        /* border: none; */
+        /* margin: 0 10px; */
+    }
+
+    .form-group select:focus-visible,
+    .form-group textarea:focus-visible,
+    .form-group input:focus-visible {
+        outline: none;
+    }
+
+    input[type=radio] {
+        width: auto !important;
+    }
+
+    .form-group {
+        margin-bottom: 40px;
+    }
+
+    label {
+        display: inline-block;
+        margin: 5px 0;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <form action="" id="test_validation">
+
+            <h1 style="text-align: center; margin-bottom:20px; color: orange;">Validation form by ĐẶNG HỮU TIẾN</h1>
+            <div class="flex">
+                <div class="form-group">
+                    <label for="firstname">First name</label> <br>
+                    <input name="firstname" id="firstname" type="text" class="form-control">
+                    <span class="form-message"></span>
+                </div>
+                <div class="form-group">
+                    <label for="lastname">Last name</label> <br>
+                    <input name="lastname" id="lastname" type="text" class="form-control">
+                    <span class="form-message"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="age">Patient Age <span style="color: red;">*</span></label><br>
+                <input id="age" name="age" type="number" class="form-control">
+                <span class="form-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="nickname">Prefered Name / Nickname</label><br>
+                <input id="nickname" type="number" class="form-control">
+                <span class="form-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="">
+                    Patient Gender<span style="color: red;">*</span>
+                </label>
+                <br>
+                <select name="" id="Gender">
+                    <option value="">-----select------</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Others">Others</option>
+                </select>
+                <span class="form-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="">Phone no.<span style="color: red;">*</span></label><br>
+                <input id="" type="number">
+                <span class="form-message"></span>
+            </div>
+
+
+
+            <div class="form-group">
+                <label for="">Spouce Name</label><br>
+                <input id="" type="text">
+                <span class="form-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="">With whome do you live?</label><br>
+                <input id="" type="text">
+                <span class="form-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="Email">Email <span style="color: red;">*</span></label><br>
+                <input id="Email" name="Email" type="text" class="form-control">
+                <span class="form-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="">Personal opinion</label><br>
+                <textarea name="Personal" id="Personal"></textarea>
+                <span class="form-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="">Marital Status<span style="color: red;">*</span></label><br>
+                <input type="radio" id="Married" name="fav_language" value="Married">
+                <label for="">Married</label><br>
+                <input type="radio" id="" name="fav_language" value="Unmarried">
+                <label for="">Unmarried</label><br>
+                <input type="radio" id="" name="fav_language" value="other">
+                <label for="">other</label><br>
+                <span class="form-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="">allergic to any medications</label><br>
+                <input type="radio" id="" name="" value="yes">
+                <label for="">yes</label><br>
+                <input type="radio" id="" name="" value="no">
+                <label for="">no</label><br>
+                <span class="form-message"></span>
+            </div>
+        </form>
+
+    </div>
+
+    <script src="./assets/js/main.js"></script>
+    <script>
+        Validator({
+            form: '#test_validation',
+            errorSelector: '.form-message',
+            rules: [
+                Validator.isRequired('#age'),
+                Validator.isRequired('#Gender'),
+                Validator.isRequired('#Email'),
+                Validator.isEmail('#Email'),
+                
+            ],
+            onSubmit: (data) => {
+                console.log(data)
+            }
+        });
+    </script>
+</body>
+
+</html>
