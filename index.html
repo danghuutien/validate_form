@@ -93,7 +93,7 @@
 
 <body>
     <div class="container">
-        <form action="" id="test_validation">
+        <form action="submit.html" id="test_validation">
 
             <h1 style="text-align: center; margin-bottom:20px; color: orange;">Validation form by ĐẶNG HỮU TIẾN</h1>
             <div class="flex">
@@ -115,7 +115,7 @@
             </div>
             <div class="form-group">
                 <label for="nickname">Prefered Name / Nickname</label><br>
-                <input id="nickname" type="number" class="form-control">
+                <input id="nickname" name="nickname" type="text" class="form-control">
                 <span class="form-message"></span>
             </div>
 
@@ -124,7 +124,7 @@
                     Patient Gender<span style="color: red;">*</span>
                 </label>
                 <br>
-                <select name="" id="Gender" class="form-control">
+                <select name="Gender" id="Gender" class="form-control">
                     <option value="">-----select------</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
@@ -135,7 +135,7 @@
 
             <div class="form-group">
                 <label for="Phone">Phone no.<span style="color: red;">*</span></label><br>
-                <input id="Phone" type="number" class="form-control">
+                <input id="Phone" name="Phone" type="number" class="form-control">
                 <span class="form-message"></span>
             </div>
 
@@ -143,13 +143,13 @@
 
             <div class="form-group">
                 <label for="">Spouce Name</label><br>
-                <input id="" type="text" class="form-control">
+                <input id="spouceName" name="spouceName" type="text" class="form-control">
                 <span class="form-message"></span>
             </div>
 
             <div class="form-group">
                 <label for="">With whome do you live?</label><br>
-                <input id="" type="text" class="form-control">
+                <input id="homeTown" name="homeTown" type="text" class="form-control">
                 <span class="form-message"></span>
             </div>
 
@@ -161,7 +161,7 @@
 
             <div class="form-group">
                 <label for="">Personal opinion</label><br>
-                <textarea name="Personal" id="Personal" class="form-control"></textarea>
+                <textarea name="Personal" id="Personal" class="form-control" cols="10" rows="10"></textarea>
                 <span class="form-message"></span>
             </div>
             <div class="form-group">
@@ -176,16 +176,20 @@
             </div>
             <div class="form-group">
                 <label for="">allergic to any medications</label><br>
-                <input type="radio" id="" name="fav" value="yes">
+                <input type="radio" id="" name="medications" value="yes">
                 <label for="">yes</label><br>
-                <input type="radio" id="" name="fav" value="no">
+                <input type="radio" id="" name="medications" value="no">
                 <label for="">no</label><br>
                 <span class="form-message"></span>
             </div>
 
 
-            <input type="submit" style="padding: 10px 20px;">
+            <input type="submit" value="submit" style="padding: 10px 20px;">
         </form>
+
+        <div id="data" style="margin-top: 20px; width:50%; margin: 0 auto;">
+            
+        </div>
 
     </div>
 
@@ -197,13 +201,39 @@
             rules: [
                 Validator.isRequired('input[name = "Marital"]'),
                 Validator.isRequired('#age'),
+                Validator.isAge('#age'),
                 Validator.isRequired('#Gender'),
                 Validator.isRequired('#Phone'),
+                Validator.minLength('#Phone'),
                 Validator.isRequired('#Email'),
                 Validator.isEmail('#Email'),  
             ],
-            onSubmit: (data) => {
-                console.log(data)
+            Required: ['Marital', 'age', 'Gender', 'Phone', 'Email'],
+            onSubmit: (data = null) => {
+                const renderData = document.getElementById("data")
+                if(data == null){
+                    renderData.innerHTML = '<h1 style = "color:red;"> Bạn phải nhập đầy đủ thông tin </h1>'
+                }else{
+                    let listDatas = '<ol>'+
+                                    `<li>firstname: ${data.firstname}</li>`+
+                                    `<li>lastname: ${data.lastname}</li>`+
+                                    `<li>age: ${data.age}</li>`+
+                                    `<li>nickname: ${data.nickname}</li>`+
+                                    `<li>Gender: ${data.Gender}</li>`+
+                                    `<li>Phone: ${data.Phone}</li>`+
+                                    `<li>spouceName: ${data.spouceName}</li>`+
+                                    `<li>homeTown: ${data.homeTown}</li>`+
+                                    `<li>Email: ${data.Email}</li>`+
+                                    `<li>Personal: ${data.Personal}</li>`+
+                                    `<li>Marital: ${data.Marital}</li>`+
+                                    `<li>allergic: ${data.medications}</li>`+
+    
+    
+                                '</ol>'
+    
+                    renderData.innerHTML = listDatas
+                    console.log(data)
+                }
             }
         });
     </script>

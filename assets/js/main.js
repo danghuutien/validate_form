@@ -3,9 +3,10 @@ function Validator(options){
 
     const formElement = document.querySelector(options.form)
 
-    function validate(inputElement, rule){
+    function getErrorElement(inputElement,rule){
         let errorMessage ;
-        let errorElement = inputElement.parentElement.querySelector(options.errorSelector)
+        // let errorElement = .parentElement.querySelector(options.errorSelector)
+        
         let rules = selectorRules[rule.selector]
         for (let index = 0; index < rules.length; index++) {
             switch (inputElement.type){
@@ -20,8 +21,14 @@ function Validator(options){
             if(errorMessage){
                 break;
             }
-            console.log(formElement.querySelector('input[type = "radio"]:checked').value)
+            // console.log(formElement.querySelector('input[type = "radio"]:checked').value)
         }
+
+        return errorMessage
+    }
+
+    function validate(inputElement, errorMessage){
+        let errorElement = inputElement.parentElement.querySelector(options.errorSelector)
         if(errorMessage){
             errorElement.innerText = errorMessage;
             inputElement.parentElement.classList.add('invalid')
@@ -40,16 +47,50 @@ function Validator(options){
                 e.preventDefault()
                 options.rules.forEach((rule)=>{
                     const inputElement = formElement.querySelector(rule.selector)
-                    validate(inputElement, rule)
+                    validate(inputElement, getErrorElement(inputElement,rule))
                 })
 
-                let inputEables = document.querySelectorAll('input[name]')
+                let inputEables = document.querySelectorAll('[name]')
             
                 values = Array.from(inputEables).reduce((values, input)=>{
                     // console.log(input)
-                    return  (values[input.name] = input.value)  && values
+
+                    switch(input.type){
+                        case 'radio':
+                            if(values[input.name] = formElement.querySelector('input[name="'+input.name+'"]:checked')){
+
+                                values[input.name] = formElement.querySelector('input[name="'+input.name+'"]:checked').value
+                            }
+                                break 
+                        default:
+                            values[input.name] = input.value
+                            break
+                    }
+                    return values
                 },{})
-                options.onSubmit(values)
+                let isSubmit
+                let valueError = formElement.querySelectorAll(options.errorSelector)
+                for(let i = 0; i< valueError.length; i++){
+                    // console.log(valueError[i].textContent)
+                    if(valueError[i].textContent == ''){
+                        isSubmit = true
+                    }
+                    else{
+                        isSubmit = false
+                        break
+                    }
+                }
+
+                console.log(isSubmit)
+
+                    if(isSubmit){
+
+                        options.onSubmit(values)
+                    }else{
+                        options.onSubmit()
+                    }
+            }else{
+                formElement.submit()
             }
         }
         options.rules.forEach((rule) => {
@@ -65,7 +106,7 @@ function Validator(options){
 
                 if(inputElement){
                     inputElement.onblur = ()=>{
-                        validate(inputElement, rule)  
+                        validate(inputElement, getErrorElement(inputElement,rule))  
                     }
         
                     inputElement.oninput = ()=>{
@@ -98,6 +139,24 @@ Validator.isEmail = (selector, message)=>{
         test: function(value) {
             let regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
             return regex.test(value) ? undefined : message||'Vui lòng nhập Email  đúng định dạng';
+        }
+    };
+}
+
+Validator.isAge = (selector, message)=>{
+    return  {
+        selector,
+        test: function(value) {
+            return value > 0 ? undefined : message||'Số tuổi không hợp lệ';
+        }
+    };
+}
+
+Validator.minLength = (selector, message)=>{
+    return  {
+        selector,
+        test: function(value) {
+            return value.length === 10 ? undefined : message||'Số điện thoại không hợp lệ';
         }
     };
 }
