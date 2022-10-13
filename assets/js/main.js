@@ -1,15 +1,26 @@
 function Validator(options){
     let selectorRules = {};
+
+    const formElement = document.querySelector(options.form)
+
     function validate(inputElement, rule){
         let errorMessage ;
         let errorElement = inputElement.parentElement.querySelector(options.errorSelector)
         let rules = selectorRules[rule.selector]
         for (let index = 0; index < rules.length; index++) {
-            
-            errorMessage = rules[index](inputElement.value);
+            switch (inputElement.type){
+                case 'radio':
+                    errorMessage = rules[index](formElement.querySelector(rule.selector 
+                        + ':checked'));
+                    break;
+                default:
+                    errorMessage = rules[index](inputElement.value);
+
+            }
             if(errorMessage){
                 break;
             }
+            console.log(formElement.querySelector('input[type = "radio"]:checked').value)
         }
         if(errorMessage){
             errorElement.innerText = errorMessage;
@@ -20,8 +31,7 @@ function Validator(options){
         }
 
     }
-    
-    const formElement = document.querySelector(options.form)
+   
     if(formElement){
         formElement.onsubmit = (e)=>{
 
@@ -43,7 +53,7 @@ function Validator(options){
             }
         }
         options.rules.forEach((rule) => {
-            const inputElement = formElement.querySelector(rule.selector)
+            const inputElements = formElement.querySelectorAll(rule.selector)
             // console.log(inputElement)
             if (Array.isArray(selectorRules[rule.selector])) {
                 selectorRules[rule.selector].push(rule.test);
@@ -51,18 +61,21 @@ function Validator(options){
                 selectorRules[rule.selector] = [rule.test];
             }
             
-            if(inputElement){
-                inputElement.onblur = ()=>{
-                    validate(inputElement, rule)  
+            Array.from(inputElements).forEach((inputElement)=>{
+
+                if(inputElement){
+                    inputElement.onblur = ()=>{
+                        validate(inputElement, rule)  
+                    }
+        
+                    inputElement.oninput = ()=>{
+                        
+                        let errorElement = inputElement.parentElement.querySelector(options.errorSelector)
+                        errorElement.innerText = '';
+                        inputElement.parentElement.classList.remove('invalid')
+                    }
                 }
-    
-                inputElement.oninput = ()=>{
-                    
-                    let errorElement = inputElement.parentElement.querySelector(options.errorSelector)
-                    errorElement.innerText = '';
-                    inputElement.parentElement.classList.remove('invalid')
-                }
-            }
+            })
         });
     }else{
         console.log('khong tim thay thẻ form')
@@ -74,7 +87,7 @@ Validator.isRequired = (selector, message)=>{
     return{
         selector,
         test: (value)=>{
-            return value.trim() ? undefined : message||'Vui long nhập trường này'
+            return value? undefined : message||'Vui long nhập trường này'
         }
     }
 }

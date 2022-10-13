@@ -166,19 +166,19 @@
             </div>
             <div class="form-group">
                 <label for="">Marital Status<span style="color: red;">*</span></label><br>
-                <input type="radio" id="Married" name="fav_language" value="Married">
+                <input type="radio" id="Married" name="Marital" value="Married">
                 <label for="">Married</label><br>
-                <input type="radio" id="" name="fav_language" value="Unmarried">
+                <input type="radio" id="" name="Marital" value="Unmarried">
                 <label for="">Unmarried</label><br>
-                <input type="radio" id="" name="fav_language" value="other">
+                <input type="radio" id="" name="Marital" value="other">
                 <label for="">other</label><br>
                 <span class="form-message"></span>
             </div>
             <div class="form-group">
                 <label for="">allergic to any medications</label><br>
-                <input type="radio" id="" name="" value="yes">
+                <input type="radio" id="" name="fav" value="yes">
                 <label for="">yes</label><br>
-                <input type="radio" id="" name="" value="no">
+                <input type="radio" id="" name="fav" value="no">
                 <label for="">no</label><br>
                 <span class="form-message"></span>
             </div>
@@ -195,6 +195,7 @@
             form: '#test_validation',
             errorSelector: '.form-message',
             rules: [
+                Validator.isRequired('input[name = "Marital"]'),
                 Validator.isRequired('#age'),
                 Validator.isRequired('#Gender'),
                 Validator.isRequired('#Phone'),
