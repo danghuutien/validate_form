@@ -208,7 +208,6 @@
                 Validator.isRequired('#Email'),
                 Validator.isEmail('#Email'),  
             ],
-            Required: ['Marital', 'age', 'Gender', 'Phone', 'Email'],
             onSubmit: (data = null) => {
                 const renderData = document.getElementById("data")
                 if(data == null){
@@ -227,8 +226,6 @@
                                     `<li>Personal: ${data.Personal}</li>`+
                                     `<li>Marital: ${data.Marital}</li>`+
                                     `<li>allergic: ${data.medications}</li>`+
-    
-    
                                 '</ol>'
     
                     renderData.innerHTML = listDatas

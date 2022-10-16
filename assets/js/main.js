@@ -8,6 +8,7 @@ function Validator(options){
         // let errorElement = .parentElement.querySelector(options.errorSelector)
         
         let rules = selectorRules[rule.selector]
+        
         for (let index = 0; index < rules.length; index++) {
             switch (inputElement.type){
                 case 'radio':
@@ -133,7 +134,7 @@ Validator.isRequired = (selector, message)=>{
     }
 }
 
-Validator.isEmail = (selector, message)=>{
+Validator.isEmail = ({selector, message})=>{
     return  {
         selector,
         test: function(value) {
@@ -156,8 +157,10 @@ Validator.minLength = (selector, message)=>{
     return  {
         selector,
         test: function(value) {
-            return value.length === 10 ? undefined : message||'Số điện thoại không hợp lệ';
+            return value.length >= 10 ? undefined : message||'Số điện thoại không hợp lệ';
         }
     };
 }
+
+
 
