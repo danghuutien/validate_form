@@ -3,52 +3,20 @@ function Validator(options){
 
     const formElement = document.querySelector(options.form)
 
-    function getErrorElement(inputElement,rule){
-        let errorMessage ;
-        // let errorElement = .parentElement.querySelector(options.errorSelector)
-        
-        let rules = selectorRules[rule.selector]
-        
-        for (let index = 0; index < rules.length; index++) {
-            switch (inputElement.type){
-                case 'radio':
-                    errorMessage = rules[index](formElement.querySelector(rule.selector 
-                        + ':checked'));
-                    break;
-                default:
-                    errorMessage = rules[index](inputElement.value);
-
-            }
-            if(errorMessage){
-                break;
-            }
-            // console.log(formElement.querySelector('input[type = "radio"]:checked').value)
-        }
-
-        return errorMessage
-    }
-
-    function validate(inputElement, errorMessage){
-        let errorElement = inputElement.parentElement.querySelector(options.errorSelector)
-        if(errorMessage){
-            errorElement.innerText = errorMessage;
-            inputElement.parentElement.classList.add('invalid')
-        }else{
-            errorElement.innerText = '';
-            inputElement.parentElement.classList.remove('invalid')
-        }
-
-    }
-   
     if(formElement){
+
+        // ---------------- xử lí sự kiện bubmit js và mặc định--------
         formElement.onsubmit = (e)=>{
-
             if(typeof(options.onSubmit) == 'function'){
-
                 e.preventDefault()
                 options.rules.forEach((rule)=>{
                     const inputElement = formElement.querySelector(rule.selector)
-                    validate(inputElement, getErrorElement(inputElement,rule))
+                    console.log(inputElement)
+                    validate(
+                        {
+                            inputElement, 
+                            errorMessage: getErrorValue({inputElement,rule})
+                        })
                 })
 
                 let inputEables = document.querySelectorAll('[name]')
@@ -69,7 +37,7 @@ function Validator(options){
                     }
                     return values
                 },{})
-                let isSubmit
+                let isSubmit;
                 let valueError = formElement.querySelectorAll(options.errorSelector)
                 for(let i = 0; i< valueError.length; i++){
                     // console.log(valueError[i].textContent)
@@ -94,8 +62,10 @@ function Validator(options){
                 formElement.submit()
             }
         }
+
+        // ---------xử lí sự kiện blur và onchange input
         options.rules.forEach((rule) => {
-            const inputElements = formElement.querySelectorAll(rule.selector)
+            let inputElements = formElement.querySelectorAll(rule.selector)
             // console.log(inputElement)
             if (Array.isArray(selectorRules[rule.selector])) {
                 selectorRules[rule.selector].push(rule.test);
@@ -107,7 +77,10 @@ function Validator(options){
 
                 if(inputElement){
                     inputElement.onblur = ()=>{
-                        validate(inputElement, getErrorElement(inputElement,rule))  
+                        validate({
+                                    inputElement, 
+                                    errorMessage:getErrorValue({inputElement,rule})
+                                })  
                     }
         
                     inputElement.oninput = ()=>{
@@ -119,13 +92,59 @@ function Validator(options){
                 }
             })
         });
+        // --------------------------------------------------
     }else{
         console.log('khong tim thay thẻ form')
     }
+
+    // --------------------kiểm tra lỗi----------------
+    let getErrorValue = (listOptions)=>{
+        let errorMessage ;
+        
+        // lấy tất cả các rules của phần tử cần validator
+        let rules = selectorRules[listOptions.rule.selector]
+        //------------------------------
+        for (let index = 0; index < rules.length; index++) {
+                // console.log(inputElement)
+
+            switch (listOptions.inputElement.type){
+                case 'radio':
+                    errorMessage = rules[index](formElement.querySelector(listOptions.rule.selector 
+                        + ':checked'));
+                    break;
+                default:
+                    errorMessage = rules[index](listOptions.inputElement.value);
+                    break;
+
+            }
+            if(errorMessage){
+                break;
+            }
+            // console.log(formElement.querySelector('input[type = "radio"]:checked').value)
+        }
+
+        return errorMessage
+    }
+
+    // ------------------------hiện lỗi------------------
+    function validate(listOptions){
+        let errorElement = listOptions.inputElement.parentElement.querySelector(options.errorSelector)
+        if(listOptions.errorMessage){
+            errorElement.innerText = listOptions.errorMessage;
+            listOptions.inputElement.parentElement.classList.add('invalid')
+        }else{
+            errorElement.innerText = '';
+            inputElement.parentElement.classList.remove('invalid')
+        }
+
+    }
+   
+    
     // console.log(selectorRules)
 }
 
-Validator.isRequired = (selector, message)=>{
+
+function isRequired (selector, message){
     return{
         selector,
         test: (value)=>{
@@ -134,7 +153,7 @@ Validator.isRequired = (selector, message)=>{
     }
 }
 
-Validator.isEmail = ({selector, message})=>{
+function isEmail (selector, message){
     return  {
         selector,
         test: function(value) {
@@ -144,7 +163,7 @@ Validator.isEmail = ({selector, message})=>{
     };
 }
 
-Validator.isAge = (selector, message)=>{
+function isAge (selector, message){
     return  {
         selector,
         test: function(value) {
@@ -153,7 +172,7 @@ Validator.isAge = (selector, message)=>{
     };
 }
 
-Validator.minLength = (selector, message)=>{
+function minLength (selector, message){
     return  {
         selector,
         test: function(value) {
@@ -161,6 +180,8 @@ Validator.minLength = (selector, message)=>{
         }
     };
 }
+
+
 
 
 

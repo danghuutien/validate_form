@@ -166,7 +166,7 @@
             </div>
             <div class="form-group">
                 <label for="">Marital Status<span style="color: red;">*</span></label><br>
-                <input type="radio" id="Married" name="Marital" value="Married">
+                <input type="radio" id="" name="Marital" value="Married">
                 <label for="">Married</label><br>
                 <input type="radio" id="" name="Marital" value="Unmarried">
                 <label for="">Unmarried</label><br>
@@ -199,14 +199,14 @@
             form: '#test_validation',
             errorSelector: '.form-message',
             rules: [
-                Validator.isRequired('input[name = "Marital"]'),
-                Validator.isRequired('#age'),
-                Validator.isAge('#age'),
-                Validator.isRequired('#Gender'),
-                Validator.isRequired('#Phone'),
-                Validator.minLength('#Phone'),
-                Validator.isRequired('#Email'),
-                Validator.isEmail('#Email'),  
+                isRequired('input[name = "Marital"]'),
+                isRequired('#age'),
+                isAge('#age'),
+                isRequired('#Gender'),
+                isRequired('#Phone'),
+                minLength('#Phone'),
+                isRequired('#Email'),
+                isEmail('#Email'),  
             ],
             onSubmit: (data = null) => {
                 const renderData = document.getElementById("data")
