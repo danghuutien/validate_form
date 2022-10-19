@@ -1,4 +1,6 @@
 function Validator(options){
+
+    
     let selectorRules = {};
 
     const formElement = document.querySelector(options.form)
@@ -11,12 +13,15 @@ function Validator(options){
                 e.preventDefault()
                 options.rules.forEach((rule)=>{
                     const inputElement = formElement.querySelector(rule.selector)
-                    console.log(inputElement)
-                    validate(
-                        {
-                            inputElement, 
-                            errorMessage: getErrorValue({inputElement,rule})
-                        })
+                    // console.log(inputElement)
+                    if(inputElement!= null){
+
+                        validate(
+                            {
+                                inputElement, 
+                                errorMessage: getErrorValue({inputElement,rule})
+                            })
+                    }
                 })
 
                 let inputEables = document.querySelectorAll('[name]')
@@ -50,7 +55,7 @@ function Validator(options){
                     }
                 }
 
-                console.log(isSubmit)
+                // console.log(isSubmit)
 
                     if(isSubmit){
 
@@ -66,6 +71,7 @@ function Validator(options){
         // ---------xử lí sự kiện blur và onchange input
         options.rules.forEach((rule) => {
             let inputElements = formElement.querySelectorAll(rule.selector)
+            // console.log(inputElements)
             // console.log(inputElement)
             if (Array.isArray(selectorRules[rule.selector])) {
                 selectorRules[rule.selector].push(rule.test);
@@ -75,7 +81,7 @@ function Validator(options){
             
             Array.from(inputElements).forEach((inputElement)=>{
 
-                if(inputElement){
+                if(inputElement != null){
                     inputElement.onblur = ()=>{
                         validate({
                                     inputElement, 
@@ -128,6 +134,7 @@ function Validator(options){
 
     // ------------------------hiện lỗi------------------
     function validate(listOptions){
+        // console.log(listOptions.inputElement)
         let errorElement = listOptions.inputElement.parentElement.querySelector(options.errorSelector)
         if(listOptions.errorMessage){
             errorElement.innerText = listOptions.errorMessage;

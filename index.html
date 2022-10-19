@@ -92,6 +92,13 @@
         display: inline-block;
         margin: 5px 0;
     }
+
+    .addtext-orther{
+        display: none;
+    }
+
+    
+
 </style>
 
 <body>
@@ -173,8 +180,14 @@
                 <label for="">Married</label><br>
                 <input type="radio" id="" name="Marital" value="Unmarried">
                 <label for="">Unmarried</label><br>
-                <input type="radio" id="" name="Marital" value="other">
-                <label for="">other</label><br>
+                <input type="radio" id="other" name="Marital" value="other">
+                <label for="other">other</label><br>
+                <span class="form-message"></span>
+            </div>
+
+            <div class="form-group addtext-orther" id="addtext-orther">
+                <label for="">Marital status(other)<span style="color: red;">*</span></label><br>
+                <input id="" name="Marital_status" type="text" class="form-control">
                 <span class="form-message"></span>
             </div>
             <div class="form-group">
@@ -183,6 +196,8 @@
                 <label for="">yes</label><br>
                 <input type="radio" id="" name="medications" value="no">
                 <label for="">no</label><br>
+
+                
                 <span class="form-message"></span>
             </div>
 
@@ -198,6 +213,26 @@
 
     <script src="./assets/js/main.js"></script>
     <script>
+        const radios = document.querySelectorAll('input[name = "Marital"')
+        console.log(radios)
+
+        Array.from(radios).forEach((radio)=>{
+            if(radio.value == 'other'){
+                radio.onclick = function(){
+
+                    document.getElementById('addtext-orther').style.display = 'block'
+                    document.getElementById('addtext-orther').querySelector('input').setAttribute("id", "Marital_status"); 
+               
+                }
+            }else{ 
+                radio.onclick = function(){
+                    document.getElementById('addtext-orther').style.display = 'none'
+                    document.getElementById('addtext-orther').querySelector('input').removeAttribute("id");
+                }
+            }
+        })
+    
+        
         Validator({
             form: '#test_validation',
             errorSelector: '.form-message',
@@ -210,12 +245,22 @@
                 minLength('#Phone'),
                 isRequired('#Email'),
                 isEmail('#Email'),  
+                isRequired('#Marital_status')
             ],
             onSubmit: (data = null) => {
                 const renderData = document.getElementById("data")
                 if(data == null){
                     renderData.innerHTML = '<h1 style = "color:red;"> Bạn phải nhập đầy đủ thông tin </h1>'
                 }else{
+                    console.log(data.Marital)
+                    let dataMarital = ''
+                    if(data.Marital == 'other'){
+                        console.log(1)
+                        dataMarital = `<li>Marital: ${data.Marital_status}</li>`
+                    }else{
+                        dataMarital = `<li>Marital: ${data.Marital}</li>`
+                    }
+                    console.log(data)
                     let listDatas = '<ol>'+
                                     `<li>firstname: ${data.firstname}</li>`+
                                     `<li>lastname: ${data.lastname}</li>`+
@@ -227,7 +272,7 @@
                                     `<li>homeTown: ${data.homeTown}</li>`+
                                     `<li>Email: ${data.Email}</li>`+
                                     `<li>Personal: ${data.Personal}</li>`+
-                                    `<li>Marital: ${data.Marital}</li>`+
+                                        dataMarital+
                                     `<li>allergic: ${data.medications}</li>`+
                                 '</ol>'
     
