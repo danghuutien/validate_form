@@ -70,35 +70,62 @@ function Validator(options){
         }
 
         // ---------xử lí sự kiện blur và onchange input
-        options.rules.forEach((rule) => {
-            let inputElements = formElement.querySelectorAll(rule.selector)
-            // console.log(inputElements)
-            // console.log(inputElement)
-            if (Array.isArray(selectorRules[rule.selector])) {
-                selectorRules[rule.selector].push(rule.test);
-            }  else {
-                selectorRules[rule.selector] = [rule.test];
-            }
-            
-            Array.from(inputElements).forEach((inputElement)=>{
 
-                if(inputElement != null){
-                    inputElement.onblur = ()=>{
-                        validate({
-                                    inputElement, 
-                                    errorMessage:getErrorValue({inputElement,rule})
-                                })  
-                    }
-        
-                    inputElement.oninput = ()=>{
-                        
-                        let errorElement = inputElement.parentElement.querySelector(options.errorSelector)
-                        errorElement.innerText = '';
-                        inputElement.parentElement.classList.remove('invalid')
-                    }
+        const radios = document.querySelectorAll('input[name = "Marital"')
+        console.log(radios)
+
+        Array.from(radios).forEach((radio)=>{
+            if(radio.value == 'other'){
+                radio.onclick = function(){
+
+                    document.getElementById('addtext-orther').style.display = 'block'
+                    document.getElementById('addtext-orther').querySelector('input').setAttribute("id", "Marital_status");
+                    getRule() 
+               
                 }
-            })
-        });
+            }else{ 
+                radio.onclick = function(){
+                    document.getElementById('addtext-orther').style.display = 'none'
+                    document.getElementById('addtext-orther').querySelector('input').removeAttribute("id");
+                }
+            }
+        })
+
+        function getRule(){
+
+            options.rules.forEach((rule) => {
+    
+                
+                let inputElements = formElement.querySelectorAll(rule.selector)
+                // console.log(inputElements)
+                // console.log(inputElement)
+                if (Array.isArray(selectorRules[rule.selector])) {
+                    selectorRules[rule.selector].push(rule.test);
+                }  else {
+                    selectorRules[rule.selector] = [rule.test];
+                }
+                
+                Array.from(inputElements).forEach((inputElement)=>{
+    
+                    if(inputElement != null){
+                        inputElement.onblur = ()=>{
+                            validate({
+                                        inputElement, 
+                                        errorMessage:getErrorValue({inputElement,rule})
+                                    })  
+                        }
+            
+                        inputElement.oninput = ()=>{
+                            
+                            let errorElement = inputElement.parentElement.querySelector(options.errorSelector)
+                            errorElement.innerText = '';
+                            inputElement.parentElement.classList.remove('invalid')
+                        }
+                    }
+                })
+            });
+        }
+        getRule()
         // --------------------------------------------------
     }else{
         console.log('khong tim thay thẻ form')
@@ -188,6 +215,8 @@ function minLength (selector, message){
         }
     };
 }
+
+
 
 
 

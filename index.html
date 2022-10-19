@@ -213,24 +213,7 @@
 
     <script src="./assets/js/main.js"></script>
     <script>
-        const radios = document.querySelectorAll('input[name = "Marital"')
-        console.log(radios)
-
-        Array.from(radios).forEach((radio)=>{
-            if(radio.value == 'other'){
-                radio.onclick = function(){
-
-                    document.getElementById('addtext-orther').style.display = 'block'
-                    document.getElementById('addtext-orther').querySelector('input').setAttribute("id", "Marital_status"); 
-               
-                }
-            }else{ 
-                radio.onclick = function(){
-                    document.getElementById('addtext-orther').style.display = 'none'
-                    document.getElementById('addtext-orther').querySelector('input').removeAttribute("id");
-                }
-            }
-        })
+        
     
         
         Validator({
