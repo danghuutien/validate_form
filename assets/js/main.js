@@ -24,7 +24,7 @@ function Validator(options){
                     }
                 })
 
-                let inputEables = document.querySelectorAll('[name]')
+                let inputEables = formElement.querySelectorAll('[name]')
             
                 values = Array.from(inputEables).reduce((values, input)=>{
                     // console.log(input)

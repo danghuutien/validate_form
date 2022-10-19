@@ -236,13 +236,6 @@
                     renderData.innerHTML = '<h1 style = "font-size:15px;color:red;"> Bạn phải nhập đầy đủ thông tin </h1>'
                 }else{
                     console.log(data.Marital)
-                    // let dataMarital = ''
-                    // if(data.Marital == 'other'){
-                    //     // console.log(1)
-                    //     dataMarital = `<li>Marital: ${data.Marital_status}</li>`
-                    // }else{
-                    //     dataMarital = `<li>Marital: ${data.Marital}</li>`
-                    // }
 
                     for (const key in data) {
                         if (data[key] ==  'other') {
@@ -250,24 +243,18 @@
                             
                         }
                     }
+                    delete data.Marital_status
                     console.log(data)
-                    let listDatas = '<ol>'+
-                                    `<li>firstname: ${data.firstname}</li>`+
-                                    `<li>lastname: ${data.lastname}</li>`+
-                                    `<li>age: ${data.age}</li>`+
-                                    `<li>nickname: ${data.nickname}</li>`+
-                                    `<li>Gender: ${data.Gender}</li>`+
-                                    `<li>Phone: ${data.Phone}</li>`+
-                                    `<li>spouceName: ${data.spouceName}</li>`+
-                                    `<li>homeTown: ${data.homeTown}</li>`+
-                                    `<li>Email: ${data.Email}</li>`+
-                                    `<li>Personal: ${data.Personal}</li>`+
-                                    `<li>Marital: ${data.Marital}</li>`+
-                                    `<li>allergic: ${data.medications}</li>`+
-                                '</ol>'
+                    renderData.innerHTML = '<h1 style = "font-size:15px;color:red;">Thông tin vừa nhập là</h1>'
+                    let listDatas = ''
+                    for (const key in data) {
+                        console.log(key)
+                        listDatas +=  `<li>${key}: ${data[key]}</li>`
+                    }
+
+                    listDatasHTMl = '<ol>'+ listDatas + '</ol>'
     
-                    renderData.innerHTML = listDatas
-                    console.log(data)
+                    renderData.innerHTML = listDatasHTMl
                 }
             }
         });
