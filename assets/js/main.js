@@ -134,7 +134,7 @@ function Validator(options){
             listOptions.inputElement.parentElement.classList.add('invalid')
         }else{
             errorElement.innerText = '';
-            inputElement.parentElement.classList.remove('invalid')
+            listOptions.inputElement.parentElement.classList.remove('invalid')
         }
 
     }
