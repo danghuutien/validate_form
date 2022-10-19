@@ -253,12 +253,19 @@
                     renderData.innerHTML = '<h1 style = "color:red;"> Bạn phải nhập đầy đủ thông tin </h1>'
                 }else{
                     console.log(data.Marital)
-                    let dataMarital = ''
-                    if(data.Marital == 'other'){
-                        // console.log(1)
-                        dataMarital = `<li>Marital: ${data.Marital_status}</li>`
-                    }else{
-                        dataMarital = `<li>Marital: ${data.Marital}</li>`
+                    // let dataMarital = ''
+                    // if(data.Marital == 'other'){
+                    //     // console.log(1)
+                    //     dataMarital = `<li>Marital: ${data.Marital_status}</li>`
+                    // }else{
+                    //     dataMarital = `<li>Marital: ${data.Marital}</li>`
+                    // }
+
+                    for (const key in data) {
+                        if (data[key] ==  'other') {
+                            data[key] = data.Marital_status
+                            
+                        }
                     }
                     console.log(data)
                     let listDatas = '<ol>'+
@@ -272,7 +279,7 @@
                                     `<li>homeTown: ${data.homeTown}</li>`+
                                     `<li>Email: ${data.Email}</li>`+
                                     `<li>Personal: ${data.Personal}</li>`+
-                                        dataMarital+
+                                    `<li>Marital: ${data.Marital}</li>`+
                                     `<li>allergic: ${data.medications}</li>`+
                                 '</ol>'
     
