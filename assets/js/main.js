@@ -26,9 +26,9 @@ function Validator(options){
 
                     switch(input.type){
                         case 'radio':
-                            if(values[input.name] = formElement.querySelector('input[name="'+input.name+'"]:checked')){
-
+                            if(formElement.querySelector('input[name="'+input.name+'"]:checked')){
                                 values[input.name] = formElement.querySelector('input[name="'+input.name+'"]:checked').value
+
                             }
                                 break 
                         default:
