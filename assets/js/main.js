@@ -35,11 +35,13 @@ function Validator(options){
                                 
                                 values[input.name] = formElement.querySelector('input[name="'+input.name+'"]:checked').value
 
+                            }else{
+                                values[input.name] = ' '
                             }
                                 break 
                         default:
                             values[input.name] = input.value
-                            break
+                            
                     }
                     return values
                 },{})
@@ -148,7 +150,7 @@ function Validator(options){
                     break;
                 default:
                     errorMessage = rules[index](listOptions.inputElement.value);
-                    break;
+                    
 
             }
             if(errorMessage){
