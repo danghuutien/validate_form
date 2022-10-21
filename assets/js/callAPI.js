@@ -79,12 +79,12 @@ function hienThi() {
         listDatas += `<h1 style="font-size:16px; color:red;">Thông tin người thứ ${i}: </h1><ol>`;
         for (const key in user) {
             if(key == 'id'){
-                continue
+                continue;
             }
             listDatas += `<li>${key}: ${user[key]}</li>`;
         }
         listDatas +=
-            `<ol><button onclick = "deleteUser(${user['id']})">xóa</button>;`
+            `<ol><button onclick = "deleteUser(${user['id']})">xóa</button>`
         });
         renderData.innerHTML = listDatas;
     })
