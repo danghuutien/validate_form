@@ -89,7 +89,7 @@ function hienThi() {
         renderData.innerHTML = listDatas;
     })
     .catch((error)=>{
-        console.log('loi: ' error)
+        console.log('loi: '+  error)
     });
 }
 
