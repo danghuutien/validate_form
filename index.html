@@ -38,9 +38,8 @@
         color: #f33a58;
     }
 
-    textarea{
-        
-    }
+    textarea {}
+
     .form-control:hover {
         border: 1px solid #1dbfaf;
     }
@@ -53,7 +52,7 @@
     }
 
     .form-group textarea {
-       
+
         resize: vertical;
     }
 
@@ -93,12 +92,15 @@
         margin: 5px 0;
     }
 
-    .addtext-orther{
+    .addtext-orther {
         display: none;
     }
 
-    
-
+    button{
+        padding: 5px 10px;
+        cursor: pointer;
+        margin: 0 10px;
+    }
 </style>
 
 <body>
@@ -123,11 +125,7 @@
                 <input id="age" name="age" type="number" class="form-control">
                 <span class="form-message"></span>
             </div>
-            <div class="form-group">
-                <label for="nickname">Prefered Name / Nickname</label><br>
-                <input id="nickname" name="nickname" type="text" class="form-control">
-                <span class="form-message"></span>
-            </div>
+
 
             <div class="form-group">
                 <label for="">
@@ -151,17 +149,9 @@
 
 
 
-            <div class="form-group">
-                <label for="">Spouce Name</label><br>
-                <input id="spouceName" name="spouceName" type="text" class="form-control">
-                <span class="form-message"></span>
-            </div>
 
-            <div class="form-group">
-                <label for="">With whome do you live?</label><br>
-                <input id="homeTown" name="homeTown" type="text" class="form-control">
-                <span class="form-message"></span>
-            </div>
+
+
 
             <div class="form-group">
                 <label for="Email">Email <span style="color: red;">*</span></label><br>
@@ -190,7 +180,7 @@
                 <input id="" name="Marital_status" type="text" class="form-control">
                 <span class="form-message"></span>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="">allergic to any medications</label><br>
                 <input type="radio" id="" name="medications" value="yes">
                 <label for="">yes</label><br>
@@ -199,65 +189,25 @@
 
                 
                 <span class="form-message"></span>
-            </div>
+            </div> -->
 
 
             <input type="submit" value="submit" style="padding: 10px 20px;">
         </form>
-
+        <div id="error"></div>
         <div id="data" style="margin-top: 20px; width:50%; margin: 0 auto;">
-            
+
         </div>
 
     </div>
 
     <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/callAPI.js"></script>
     <script>
-        
-    
-        
-        Validator({
-            form: '#test_validation',
-            errorSelector: '.form-message',
-            rules: [
-                isRequired('input[name = "Marital"]'),
-                isRequired('#age'),
-                isAge('#age'),
-                isRequired('#Gender'),
-                isRequired('#Phone'),
-                minLength('#Phone'),
-                isRequired('#Email'),
-                isEmail('#Email'),  
-                isRequired('#Marital_status')
-            ],
-            onSubmit: (data = null) => {
-                const renderData = document.getElementById("data")
-                if(data == null){
-                    renderData.innerHTML = '<h1 style = "font-size:15px;color:red;"> Bạn phải nhập đầy đủ thông tin </h1>'
-                }else{
-                    console.log(data.Marital)
 
-                    for (const key in data) {
-                        if (data[key] ==  'other') {
-                            data[key] = data.Marital_status
-                            
-                        }
-                    }
-                    delete data.Marital_status
-                    console.log(data)
-                    renderData.innerHTML = '<h1 style = "font-size:15px;color:red;">Thông tin vừa nhập là</h1>'
-                    let listDatas = ''
-                    for (const key in data) {
-                        console.log(key)
-                        listDatas +=  `<li>${key}: ${data[key]}</li>`
-                    }
 
-                    listDatasHTMl = '<ol>'+ listDatas + '</ol>'
-    
-                    renderData.innerHTML = listDatasHTMl
-                }
-            }
-        });
+
+
     </script>
 </body>
 

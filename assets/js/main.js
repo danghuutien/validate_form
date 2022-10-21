@@ -11,6 +11,7 @@ function Validator(options){
         formElement.onsubmit = (e)=>{
             if(typeof(options.onSubmit) == 'function'){
                 e.preventDefault()
+                
                 options.rules.forEach((rule)=>{
                     const inputElement = formElement.querySelector(rule.selector)
                     // console.log(inputElement)
