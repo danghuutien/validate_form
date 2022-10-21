@@ -106,7 +106,7 @@ function deleteUser(id) {
         document.getElementById("error").innerHTML = '<span style="color:green"> Bạn đã xóa thành công </span>' ;
             setInterval(()=>{
                 document.getElementById("error").innerHTML = ''
-            }, 3000)
+            }, 1000)
         hienThi()
     });
     
