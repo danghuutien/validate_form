@@ -8,15 +8,15 @@ Validator({
     form: "#test_validation",
     errorSelector: ".form-message",
     rules: [
-        // isRequired('input[name = "Marital"]'),
-        // isRequired("#age"),
-        // isAge("#age"),
-        // isRequired("#Gender"),
-        // isRequired("#Phone"),
-        // minLength("#Phone"),
-        // isRequired("#Email"),
-        // isEmail("#Email"),
-        // isRequired("#Marital_status"),
+        isRequired('input[name = "Marital"]'),
+        isRequired("#age"),
+        isAge("#age"),
+        isRequired("#Gender"),
+        isRequired("#Phone"),
+        minLength("#Phone"),
+        isRequired("#Email"),
+        isEmail("#Email"),
+        isRequired("#Marital_status"),
     ],
     onSubmit: (data = null) => {
        
@@ -52,7 +52,7 @@ Validator({
                     setTimeout(() => {
                         document.getElementById("error").innerHTML = ''
                     }, 3000);
-                    location.reload();
+                    hienThi()
                 }else{
                     throw new Error(`${response.status} - ${response.statusText}`);
                 }
@@ -84,18 +84,21 @@ async function hienThi() {
             
             const users = await response.json();
             let listDatas = "";
-                let i = 0;
-                users.forEach((user) => {
+            let i = 0;
+            users.forEach((user) => {
                 i++;
-                listDatas += `<h1 style="font-size:16px; color:red;">Thông tin người thứ ${i}: </h1><ol>`;
+                listDatas += `<h1 style="font-size:16px; color:red;">Thông tin người thứ ${i} </h1> <table  style="width:100%; margin: 0 auto; border: 1px solid gray;">`;
                 for (const key in user) {
                     if(key == 'id'){
                         continue;
                     }
-                    listDatas += `<li>${key}: ${user[key]}</li>`;
+                    
+                    
+                    listDatas += `<tr><td style="width:30%">${key}</td><td style="width:70%">${user[key]}</td></tr>` 
                 }
-                listDatas +=
-                    `<ol><button onclick = "deleteUser(${user['id']})">xóa</button>`
+                listDatas += `</table>` + 
+                        `<button onclick = 'deleteUser(${user['id']}) '>xóa </button>`
+                // renderData.querySelector('table').innerHTML = listDatas
                 });
                 renderData.innerHTML = listDatas;
         }else{
@@ -130,8 +133,8 @@ function deleteUser(id) {
         document.getElementById("error").innerHTML = '<span style="color:green"> Bạn đã xóa thành công </span>' ;
             setInterval(()=>{
                 document.getElementById("error").innerHTML = ''
-            }, 1000)
-            location.reload();
+            }, 3000)
+            hienThi()
     });
     
 }
