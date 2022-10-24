@@ -8,89 +8,113 @@ Validator({
     form: "#test_validation",
     errorSelector: ".form-message",
     rules: [
-        isRequired('input[name = "Marital"]'),
-        isRequired("#age"),
-        isAge("#age"),
-        isRequired("#Gender"),
-        isRequired("#Phone"),
-        minLength("#Phone"),
-        isRequired("#Email"),
-        isEmail("#Email"),
-        isRequired("#Marital_status"),
+        // isRequired('input[name = "Marital"]'),
+        // isRequired("#age"),
+        // isAge("#age"),
+        // isRequired("#Gender"),
+        // isRequired("#Phone"),
+        // minLength("#Phone"),
+        // isRequired("#Email"),
+        // isEmail("#Email"),
+        // isRequired("#Marital_status"),
     ],
     onSubmit: (data = null) => {
-        hienThi();
+       
         console.log(data);
         const renderData = document.getElementById("data");
         if (data == null) {
         renderData.innerHTML =
             '<h1 style = "font-size:15px;color:red;"> Bạn phải nhập đầy đủ thông tin </h1>';
         } else {
-        for (const key in data) {
-            if (data[key] == "other") {
-            data[key] = data.Marital_status;
+            for (const key in data) {
+                if (data[key] == "other") {
+                data[key] = data.Marital_status;
+                }
             }
-        }
-        delete data.Marital_status;
-        createUser();
-        hienThi();
-        function createUser() {
-            fetch("https://634fcc2978563c1d82b00708.mockapi.io/api/User", {
+            delete data.Marital_status;
+            createUser(data);
+        
+            async function createUser(data) {
+
+            try{
+                const response = await fetch("https://634fcc2978563c1d82b00708.mockapi.io/api/User", {
                 method: "POST", // or 'PUT'
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data)
             })
-            .then(() =>{
-                document.getElementById("error").innerHTML  = '<span style="color:green">Bạn đã nhập thành công</span>';
+
+            // console.log(response)
+                if(response.ok){
+                    // console.log(111111)
+                    document.getElementById("error").innerHTML  = '<span style="color:green">Bạn đã nhập thành công</span>';
+                    setTimeout(() => {
+                        document.getElementById("error").innerHTML = ''
+                    }, 3000);
+                    location.reload();
+                }else{
+                    throw new Error(`${response.status} - ${response.statusText}`);
+                }
+            }catch(error){
+                document.getElementById("error").style.color = 'red'
+                document.getElementById("error").innerHTML = 'lỗi: ' + error
                 setTimeout(() => {
                     document.getElementById("error").innerHTML = ''
+                    document.getElementById("error").style.color = 'black'
                 }, 3000);
-            })
-            .catch((error) => {
-                document.getElementById("error").innerHTML  = `<span style="color:red">Lỗi khi đẩy dữ liệu lên API <br>Tên lỗi: ${error}</span>`;
-                setTimeout(() => {
-                    document.getElementById("error").innerHTML = ''
-                }, 3000);
-            });
+            }
+            
+           
         }
             
         }
     },
 });
 
-function hienThi() {
-    console.log(1)
-    async function renderDatas() {
+async function hienThi() {
+    const renderData = document.getElementById("data");
+    try{
+
         const response = await fetch(
         "https://634fcc2978563c1d82b00708.mockapi.io/api/User"
         );
-        const user = await response.json();
-        return user;
-    }
-    const renderData = document.getElementById("data");
-    console.log(renderData);
-    renderDatas().then((users) => {
-        let listDatas = "";
-        let i = 0;
-        users.forEach((user) => {
-        i++;
-        listDatas += `<h1 style="font-size:16px; color:red;">Thông tin người thứ ${i}: </h1><ol>`;
-        for (const key in user) {
-            if(key == 'id'){
-                continue;
-            }
-            listDatas += `<li>${key}: ${user[key]}</li>`;
+        // console.log(response)
+        if(response.ok){
+            
+            const users = await response.json();
+            let listDatas = "";
+                let i = 0;
+                users.forEach((user) => {
+                i++;
+                listDatas += `<h1 style="font-size:16px; color:red;">Thông tin người thứ ${i}: </h1><ol>`;
+                for (const key in user) {
+                    if(key == 'id'){
+                        continue;
+                    }
+                    listDatas += `<li>${key}: ${user[key]}</li>`;
+                }
+                listDatas +=
+                    `<ol><button onclick = "deleteUser(${user['id']})">xóa</button>`
+                });
+                renderData.innerHTML = listDatas;
+        }else{
+            throw new Error(`${response.status} - ${response.statusText}`);
         }
-        listDatas +=
-            `<ol><button onclick = "deleteUser(${user['id']})">xóa</button>`
-        });
-        renderData.innerHTML = listDatas;
-    })
-    .catch((error)=>{
-        console.log('loi: '+  error)
-    });
+        
+    }
+    catch(error){
+        document.getElementById("error").style.color = 'red'
+                document.getElementById("error").innerHTML = 'lỗi: ' + error
+                setTimeout(() => {
+                    document.getElementById("error").innerHTML = ''
+                    document.getElementById("error").style.color = 'black'
+                }, 3000);
+                
+    }
+    
+    
+   
 }
 
 
@@ -107,23 +131,8 @@ function deleteUser(id) {
             setInterval(()=>{
                 document.getElementById("error").innerHTML = ''
             }, 1000)
-        hienThi()
+            location.reload();
     });
     
 }
 
-
-
-
-
-
-let a =1
-
-const callback = (b) => {
-    a = b
-}
-
-
-
-
-useCallback(callback)
