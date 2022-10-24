@@ -116,3 +116,14 @@ function deleteUser(id) {
 
 
 
+
+let a =1
+
+const callback = (b) => {
+    a = b
+}
+
+
+
+
+useCallback(callback)
