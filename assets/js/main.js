@@ -75,7 +75,7 @@ function Validator(options){
         // ---------xử lí sự kiện blur và onchange input
 
         const radios = document.querySelectorAll('input[name = "Marital"')
-        console.log(radios)
+        // console.log(radios)
 
         Array.from(radios).forEach((radio)=>{
             if(radio.value == 'other'){
@@ -143,7 +143,6 @@ function Validator(options){
         //------------------------------
         for (let index = 0; index < rules.length; index++) {
                 // console.log(inputElement)
-
             switch (listOptions.inputElement.type){
                 case 'radio':
                     errorMessage = rules[index](formElement.querySelector(listOptions.rule.selector 

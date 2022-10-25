@@ -118,10 +118,59 @@
         margin-top: 30px;
     }
 
+    #success{
+        background-color: green;
+        padding: 10px 20px;
+        display: none;
+        transition: all 0.5s;
+    }
+    #err{
+        background-color: red;
+        padding: 10px 20px;
+        display: none;
+        transition: all 0.5s;
+        animation: 1s block linear;
+        color: #fff;
+    }
+
+
+    #notification{
+        position: fixed;
+        top: 50px;
+        left: 30px;
+        animation: 1s block linear ;
+    }
+
+    #update{
+        display: none;
+    }
+
+    @keyframes block{
+        form{
+            opacity: 0;
+        }
+        to{
+            opacity: 1;
+        }
+    }
+
+    
+
 </style>
 
 <body>
+
+    <div id="notification">
+        <span id="err">
+            xóa
+        </span>
+        <span id="success">
+            xóa
+        </span>
+    </div>
+
     <div class="container">
+        <input type="text" id="scroll" style="opacity: 0;">
         <form action="submit.html" id="test_validation">
 
             <h1 style="text-align: center; margin-bottom:20px; color: orange;">Validation form by ĐẶNG HỮU TIẾN</h1>
@@ -164,12 +213,6 @@
                 <span class="form-message"></span>
             </div>
 
-
-
-
-
-
-
             <div class="form-group">
                 <label for="Email">Email <span style="color: red;">*</span></label><br>
                 <input id="Email" name="Email" type="text" class="form-control">
@@ -211,8 +254,9 @@
 
             <input type="submit" value="submit" style="padding: 10px 20px;">
         </form>
+        <button id="update">Cập nhật</button>
         <div id="error"></div>
-        <div id="data" style="margin-top: 20px; width:50%; margin: 0 auto;">
+        <div id="data" style="margin-top: 20px; width:90%; margin: 0 auto;">
             
             
                   
