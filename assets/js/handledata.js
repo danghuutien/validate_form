@@ -1,33 +1,33 @@
 async function deleteUser(id) {
   try {
     const response = await fetch(
-      "https://634fcc2978563c1d82b00708.mockapi.io/api/User/" + id,
-      {
-        method: "DELETE", // Method itself
-        headers: {
-          "Content-type": "application/json; charset=UTF-8", // Indicates the content
-        },
-      }
+        "https://634fcc2978563c1d82b00708.mockapi.io/api/User/" + id,
+        {
+            method: "DELETE", // Method itself
+            headers: {
+            "Content-type": "application/json; charset=UTF-8", // Indicates the content
+            },
+        }
     );
     // console.log(response);
     if (response.ok) {
-      notification.querySelector("#success").innerText =
-        "Bạn đã xóa thành công";
-      notification.querySelector("#success").style.display = "inline";
-      // document.getElementById("error").innerHTML  = '<span style="color:green">Bạn đã nhập thành công</span>';
-      setTimeout(() => {
-        notification.querySelector("#success").style.display = "none";
-      }, 3000);
-      hienThi();
+        notification.querySelector("#success").innerText =
+            "Bạn đã xóa thành công";
+        notification.querySelector("#success").style.display = "inline";
+        // document.getElementById("error").innerHTML  = '<span style="color:green">Bạn đã nhập thành công</span>';
+        setTimeout(() => {
+            notification.querySelector("#success").style.display = "none";
+        }, 3000);
+        hienThi();
     } else {
       throw new Error(`${response.status} - ${response.statusText}`);
     }
   } catch (err) {
-    notification.querySelector("#err").innerText = "lỗi: " + error;
-    notification.querySelector("#err").style.display = "inline";
-    setTimeout(() => {
-      notification.querySelector("#err").style.display = "none";
-    }, 3000);
+        notification.querySelector("#err").innerText = "lỗi: " + error;
+        notification.querySelector("#err").style.display = "inline";
+        setTimeout(() => {
+            notification.querySelector("#err").style.display = "none";
+        }, 3000);
   }
 }
 
@@ -83,36 +83,36 @@ const updateUser = async (id) => {
         });
         delete values.Marital_status;
         try {
-          const response = await fetch(
-            "https://634fcc2978563c1d82b00708.mockapi.io/api/User/" + id,
-            {
-              method: "PUT",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(values),
-            }
-          );
+            const response = await fetch(
+                "https://634fcc2978563c1d82b00708.mockapi.io/api/User/" + id,
+                {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(values),
+                }
+            );
           if (response.ok) {
-            notification.querySelector("#success").innerText =
-              "Bạn đã cập nhật thành công";
-            notification.querySelector("#success").style.display = "inline";
-            hienThi();
-            update.style.display = "none";
-            document.querySelector('input[type="submit"').style.display =
-              "block";
+                notification.querySelector("#success").innerText =
+                "Bạn đã cập nhật thành công";
+                notification.querySelector("#success").style.display = "inline";
+                hienThi();
+                update.style.display = "none";
+                document.querySelector('input[type="submit"').style.display =
+                "block";
 
-            // document.getElementById("error").innerHTML  = '<span style="color:green">Bạn đã nhập thành công</span>';
-            setTimeout(() => {
-              notification.querySelector("#success").style.display = "none";
-            }, 3000);
-          } else {
-            throw new Error(`${response.status} - ${response.statusText}`);
-          }
+                // document.getElementById("error").innerHTML  = '<span style="color:green">Bạn đã nhập thành công</span>';
+                setTimeout(() => {
+                    notification.querySelector("#success").style.display = "none";
+                }, 3000);
+            } else {
+                throw new Error(`${response.status} - ${response.statusText}`);
+            }
         } catch (err) {
-          notification.querySelector("#err").innerText = "lỗi: " + error;
-          notification.querySelector("#err").style.display = "inline";
-          setTimeout(() => {
-            notification.querySelector("#err").style.display = "none";
-          }, 3000);
+            notification.querySelector("#err").innerText = "lỗi: " + error;
+            notification.querySelector("#err").style.display = "inline";
+            setTimeout(() => {
+                notification.querySelector("#err").style.display = "none";
+            }, 3000);
         }
       };
     } else {

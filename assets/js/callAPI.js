@@ -8,15 +8,15 @@ Validator({
     form: "#test_validation",
     errorSelector: ".form-message",
     rules: [
-        isRequired('input[name = "Marital"]'),
-        isRequired("#age"),
-        isAge("#age"),
-        isRequired("#Gender"),
-        isRequired("#Phone"),
-        minLength("#Phone"),
-        isRequired("#Email"),
-        isEmail("#Email"),
-        isRequired("#Marital_status"),
+        // isRequired('input[name = "Marital"]'),
+        // isRequired("#age"),
+        // isAge("#age"),
+        // isRequired("#Gender"),
+        // isRequired("#Phone"),
+        // minLength("#Phone"),
+        // isRequired("#Email"),
+        // isEmail("#Email"),
+        // isRequired("#Marital_status"),
   ],
   onSubmit: (data = null) => {
     // console.log(data);
@@ -25,50 +25,49 @@ Validator({
       renderData.innerHTML =
         '<h1 style = "font-size:15px;color:red;"> Bạn phải nhập đầy đủ thông tin </h1>';
     } else {
-        Object.keys(data).forEach((key) => {
-            if (data[key] == "other") {
-            data[key] = data.Marital_status;
-            }
-        });
-        delete data.Marital_status;
-        createUser(data);
+      Object.keys(data).forEach((key) => {
+        if (data[key] == "other") {
+          data[key] = data.Marital_status;
+        }
+      });
+      delete data.Marital_status;
+      createUser(data);
     }
   },
 });
 
 async function createUser(data) {
-    try {
+  try {
     const response = await fetch(
-        "https://634fcc2978563c1d82b00708.mockapi.io/api/User",
-        {
+      "https://634fcc2978563c1d82b00708.mockapi.io/api/User",
+      {
         method: "POST", // or 'PUT'
         headers: {
-            "Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-        }
+      }
     );
 
     if (response.ok) {
-        hienThi();
-        notification.querySelector("#success").innerText =
+      hienThi();
+      notification.querySelector("#success").innerText =
         "Bạn đã nhập thành công";
-        notification.querySelector("#success").style.display = "inline";
-        // document.getElementById("error").innerHTML  = '<span style="color:green">Bạn đã nhập thành công</span>';
-        setTimeout(() => {
+      notification.querySelector("#success").style.display = "inline";
+      // document.getElementById("error").innerHTML  = '<span style="color:green">Bạn đã nhập thành công</span>';
+      setTimeout(() => {
         notification.querySelector("#success").style.display = "none";
-        }, 3000);
+      }, 3000);
     } else {
-        throw new Error(`${response.status} - ${response.statusText}`);
+      throw new Error(`${response.status} - ${response.statusText}`);
     }
-    } catch (error) {
+  } catch (error) {
     notification.querySelector("#err").innerText = "lỗi: " + error;
     notification.querySelector("#err").style.display = "inline";
     setTimeout(() => {
-        notification.querySelector("#err").style.display = "none";
+      notification.querySelector("#err").style.display = "none";
     }, 3000);
-    
-    }
+  }
 }
 
 async function hienThi() {
@@ -79,23 +78,22 @@ async function hienThi() {
     );
     // console.log(response);
     if (response.ok) {
-        const users = await response.json();
-        console.log(users)
-        let listDatas = "";
-        users.map((user) => {
-            listDatas += `<h1 style="font-size:16px; color:red;">Thông tin người thứ ${user["id"]} </h1> <table  style="width:100%; margin: 0 auto; border: 1px solid gray;">`;
-            Object.keys(user).forEach((key) => {
-            if (key != "id") {
-                listDatas += `<tr><td style="width:30%">${key}</td><td style="width:70%">${user[key]}</td></tr>`;
-            }
-            });
-
-            listDatas +=
-            `</table>` 
-            // `<button onclick = 'deleteUser(${user["id"]}) '>xóa </button>` 
-            // `<button onclick = 'updateUser(${user["id"]}) '><label for="scroll">sửa</label></button>`;
-            // renderData.querySelector('table').innerHTML = listDatas
+      const users = await response.json();
+    //   console.log(users);
+      let listDatas = "";
+      users.map((user) => {
+        listDatas += `<h1 style="font-size:16px; color:red;">Thông tin người thứ ${user["id"]} </h1> <table  style="width:100%; margin: 0 auto; border: 1px solid gray;">`;
+        Object.keys(user).forEach((key) => {
+          if (key != "id") {
+            listDatas += `<tr><td style="width:30%">${key}</td><td style="width:70%">${user[key]}</td></tr>`;
+          }
         });
+
+        listDatas += `</table>`;
+        // `<button onclick = 'deleteUser(${user["id"]}) '>xóa </button>`
+        // `<button onclick = 'updateUser(${user["id"]}) '><label for="scroll">sửa</label></button>`;
+        // renderData.querySelector('table').innerHTML = listDatas
+      });
       renderData.innerHTML = listDatas;
     } else {
       throw new Error(`${response.status} - ${response.statusText}`);
