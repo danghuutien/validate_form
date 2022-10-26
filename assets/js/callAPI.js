@@ -82,7 +82,7 @@ async function hienThi() {
         const users = await response.json();
         console.log(users)
         let listDatas = "";
-        users.forEach((user) => {
+        users.map((user) => {
             listDatas += `<h1 style="font-size:16px; color:red;">Thông tin người thứ ${user["id"]} </h1> <table  style="width:100%; margin: 0 auto; border: 1px solid gray;">`;
             Object.keys(user).forEach((key) => {
             if (key != "id") {
