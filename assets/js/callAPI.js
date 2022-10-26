@@ -79,23 +79,23 @@ async function hienThi() {
     );
     // console.log(response);
     if (response.ok) {
-      const users = await response.json();
-      let listDatas = "";
-      let i = 0;
-      users.forEach((user) => {
-        listDatas += `<h1 style="font-size:16px; color:red;">Thông tin người thứ ${user["id"]} </h1> <table  style="width:100%; margin: 0 auto; border: 1px solid gray;">`;
-        Object.keys(user).forEach((key) => {
-          if (key != "id") {
-            listDatas += `<tr><td style="width:30%">${key}</td><td style="width:70%">${user[key]}</td></tr>`;
-          }
-        });
+        const users = await response.json();
+        console.log(users)
+        let listDatas = "";
+        users.forEach((user) => {
+            listDatas += `<h1 style="font-size:16px; color:red;">Thông tin người thứ ${user["id"]} </h1> <table  style="width:100%; margin: 0 auto; border: 1px solid gray;">`;
+            Object.keys(user).forEach((key) => {
+            if (key != "id") {
+                listDatas += `<tr><td style="width:30%">${key}</td><td style="width:70%">${user[key]}</td></tr>`;
+            }
+            });
 
-        listDatas +=
-          `</table>` +
-          `<button onclick = 'deleteUser(${user["id"]}) '>xóa </button>` +
-          `<button onclick = 'updateUser(${user["id"]}) '><label for="scroll">sửa</label></button>`;
-        // renderData.querySelector('table').innerHTML = listDatas
-      });
+            listDatas +=
+            `</table>` 
+            // `<button onclick = 'deleteUser(${user["id"]}) '>xóa </button>` 
+            // `<button onclick = 'updateUser(${user["id"]}) '><label for="scroll">sửa</label></button>`;
+            // renderData.querySelector('table').innerHTML = listDatas
+        });
       renderData.innerHTML = listDatas;
     } else {
       throw new Error(`${response.status} - ${response.statusText}`);
